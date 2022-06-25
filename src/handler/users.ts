@@ -18,7 +18,7 @@ const create = async (req: Request, res: Response) => {
     password: req.body.password,
   };
   const newUser = await store.create(user);
-  const token = jwt.sign({ user: newUser }, process.env.TOKEN_SECRET);
+  const token = jwt.sign({ user: newUser }, String(process.env.TOKEN_SECRET));
   res.json(token);
 };
 const authenticate = async (req: Request, res: Response) => {
@@ -33,15 +33,15 @@ const authenticate = async (req: Request, res: Response) => {
     req.body.password
   );
 
-  const token = jwt.sign({ user: authenticatedUser }, process.env.TOKEN_SECRET);
+  const token = jwt.sign({ user: authenticatedUser }, String(process.env.TOKEN_SECRET));
   res.json(token);
 };
 
 export const verifyToken = (req: Request, res: Response, next: () => void) => {
   try {
     const authorizationHeader = req.headers.authorization;
-    const token = authorizationHeader?.split(" ")[1];
-    const verify = jwt.verify(token, process.env.TOKEN_SECRET);
+    const token = String(authorizationHeader?.split(" ")[1]);
+    const verify = jwt.verify(token, String(process.env.TOKEN_SECRET));
     next();
   } catch (error) {
     res.status(401);
