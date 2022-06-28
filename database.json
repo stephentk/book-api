@@ -12,6 +12,11 @@
       "database": "warehouse_test",
       "user": "storedata",
       "password": "password"
-    }
+    },
+    "production": {
+        "driver": "pg",
+        "native": "true"
   }
+    
+}
   
