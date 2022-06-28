@@ -11,7 +11,10 @@ const client = new Pool({
   database: POSTGRES_DB,
   user: USER,
   password: PASSWORD,
-  connectionString
+  connectionString,
+  ssl:{
+    rejectUnauthorized:false,
+  },
 });
 
 export default client;
